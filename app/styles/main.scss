@@ -1,65 +1,85 @@
-$triangle-base: 100px;
-$num-wide: 8;
-$row-width: $triangle-base * $num-wide;
-
-$a-color: orange;
-$b-color: red;
-$c-color: blue;
-$d-color: green;
-
+@import "compass";
 
 body {
-    background: #ddd;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    color: #333;
+  background: #ddd;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #333;
 }
 
-.hex-pattern-row {
-    margin: 50px auto;
-    outline: 1px solid gray;
-    visibility: visible;
-    overflow: hidden;
-
-    .a-d, .b, .c {
-        width: 0px;
-        height: 0px;
-        border: $triangle-base/2 solid transparent;
-        float: left;
-        margin: 0px;
-        padding: 0px;
-    }
-
-    display: block;
+.container {
+    width: 960px;
+    margin: 0 auto;
     position: relative;
-    height: $triangle-base;
-    width: $row-width;
+}
 
-    .b-row {
-        visibility: visible;
-        position: absolute;
-        width: $row-width + $triangle-base;
-        margin-left: -($triangle-base/2);
-        margin-top:  -($triangle-base/2); 
+@mixin geometric-pattern-row ($triangle-base, $num-wide, $color) {
 
-        .b {
-          border-bottom: $triangle-base/2 solid red;
-        }
-    }
+  $row-width: $triangle-base * $num-wide;  
+  $a-color: adjust-lightness($color, 05%);
+  $b-color: adjust-lightness($color, 10%);
+  $c-color: adjust-lightness($color, 15%);
+  $d-color: adjust-lightness($color, 20%);
 
-    .a-d {
-      border-top: $triangle-base/2 solid orange;
-      border-bottom: $triangle-base/2 solid green;
-    }
+  .geometric-pattern-row {
+      margin: 0 auto;
+      overflow: hidden;
+      display: block;
+      position: relative;
+      height: $triangle-base;
+      width: $row-width; 
 
-    .c-row {
-        visibility: visible;
-        position: absolute;
-        width: $row-width + $triangle-base;
-        margin-left: -($triangle-base/2);
-        margin-top:  $triangle-base/2;
+      .a-d, .b, .c {
+          @include transition(all 0.5s ease);
+          width: 0px;
+          height: 0px;
+          border: $triangle-base/2 solid transparent;
+          float: left;
+          margin: 0px;
+          padding: 0px;
+      }  
 
-        .c {
-          border-top: $triangle-base/2 solid blue;
-        }
-    }
+      .b-row {
+          visibility: visible;
+          position: absolute;
+          width: $row-width + $triangle-base;
+          margin-left: -($triangle-base/2);
+          margin-top:  -($triangle-base/2);   
+          .b {
+            border-bottom: $triangle-base/2 solid $b-color;
+          }
+      } // end of b-row 
+
+      .a-d {
+        border-top: $triangle-base/2 solid $a-color;
+        border-bottom: $triangle-base/2 solid $d-color;
+      }  
+
+      .c-row {
+          visibility: visible;
+          position: absolute;
+          width: $row-width + $triangle-base;
+          margin-left: -($triangle-base/2);
+          margin-top:  $triangle-base/2;  
+          .c {
+            border-top: $triangle-base/2 solid $c-color;
+          }
+      } // end of c-row
+
+  } // end of geometric-pattern-row
+}//end of mixin definition 
+
+.geometric-container {
+  margin: 50px auto;
+
+  $r: 72;
+  $g: 100;
+  $b: 67;
+
+  @include geometric-pattern-row (100px, 8, rgb($r, $g, $b));
+  &:hover {
+    @include geometric-pattern-row (100px, 8, rgb($r+50, $g+20, $b+10));
+  }
+  &:active {
+    @include geometric-pattern-row (100px, 8, rgb($r+10, $g+50, $b+20));
+  }
 }
