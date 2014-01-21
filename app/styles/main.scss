@@ -1,28 +1,65 @@
+$triangle-base: 100px;
+$num-wide: 8;
+$row-width: $triangle-base * $num-wide;
+
+$a-color: orange;
+$b-color: red;
+$c-color: blue;
+$d-color: green;
+
+
 body {
-    background: #fafafa;
+    background: #ddd;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: #333;
 }
 
-.hero-unit {
-    margin: 50px auto 0 auto;
-    width: 300px;
-    font-size: 18px;
-    font-weight: 200;
-    line-height: 30px;
-    background-color: #eee;
-    border-radius: 6px;
-    padding: 60px;
-    h1 {
-        font-size: 60px;
-        line-height: 1;
-        letter-spacing: -1px;
-    }
-}
+.hex-pattern-row {
+    margin: 50px auto;
+    outline: 1px solid gray;
+    visibility: visible;
+    overflow: hidden;
 
-.browsehappy {
-    margin: 0.2em 0;
-    background: #ccc;
-    color: #000;
-    padding: 0.2em 0;
+    .a-d, .b, .c {
+        width: 0px;
+        height: 0px;
+        border: $triangle-base/2 solid transparent;
+        float: left;
+        margin: 0px;
+        padding: 0px;
+    }
+
+    display: block;
+    position: relative;
+    height: $triangle-base;
+    width: $row-width;
+
+    .b-row {
+        visibility: visible;
+        position: absolute;
+        width: $row-width + $triangle-base;
+        margin-left: -($triangle-base/2);
+        margin-top:  -($triangle-base/2); 
+
+        .b {
+          border-bottom: $triangle-base/2 solid red;
+        }
+    }
+
+    .a-d {
+      border-top: $triangle-base/2 solid orange;
+      border-bottom: $triangle-base/2 solid green;
+    }
+
+    .c-row {
+        visibility: visible;
+        position: absolute;
+        width: $row-width + $triangle-base;
+        margin-left: -($triangle-base/2);
+        margin-top:  $triangle-base/2;
+
+        .c {
+          border-top: $triangle-base/2 solid blue;
+        }
+    }
 }
