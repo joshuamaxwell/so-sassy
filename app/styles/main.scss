@@ -1,16 +1,20 @@
 @import "compass";
 
+$header-height: 50px;
+
 body {
   background: #ddd;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: #333;
 }
 
-.container {
-    width: 960px;
-    margin: 0 auto;
+.card {
+    margin: 50px auto;
+    width: 800px;
     position: relative;
-}
+    outline: 2px solid lime;
+    @include transition (all 2s ease);
+    }
 
 @mixin geometric-pattern-row ($triangle-base, $num-wide, $color) {
 
@@ -20,8 +24,10 @@ body {
   $c-color: adjust-lightness($color, 15%);
   $d-color: adjust-lightness($color, 20%);
 
+  width: $row-width;
+  margin: 0px auto;
+
   .geometric-pattern-row {
-      margin: 0 auto;
       overflow: hidden;
       display: block;
       position: relative;
@@ -68,8 +74,9 @@ body {
   } // end of geometric-pattern-row
 }//end of mixin definition 
 
-.geometric-container {
-  margin: 50px auto;
+.geometric-container-b{
+  margin: 0px auto;
+  border-radius: 10px;
 
   $r: 72;
   $g: 100;
@@ -80,6 +87,55 @@ body {
     @include geometric-pattern-row (100px, 8, rgb($r+50, $g+20, $b+10));
   }
   &:active {
-    @include geometric-pattern-row (100px, 8, rgb($r+10, $g+50, $b+20));
+    @include geometric-pattern-row (100px, 8, rgb($r+10, $g+50, $b+90));
   }
+}
+
+.geometric-container-a{
+  margin: 00px auto;
+  border-radius: 10px;
+
+
+  $r: 20;
+  $g: 20;
+  $b: 150;
+
+  @include geometric-pattern-row (100px, 8, rgb($r, $g, $b));
+  &:hover {
+    @include geometric-pattern-row (100px, 8, rgb($r+50, $g+20, $b+10));
+  }
+  &:active {
+    @include geometric-pattern-row (100px, 8, rgb($r+10, $g+50, $b+90));
+  }
+}
+
+@mixin headerbar ($header-height) {
+    box-shadow: 0 5px 50px 0px black;
+    height: $header-height;
+    .container {
+        span.title {
+            font-size: 50px;
+            line-height: $header-height;
+            text-align: center;
+            margin: 0 auto;
+        }
+    }
+}
+@mixin subheader () {
+    span.subtitle {
+        font-size: 20px;
+        background-color: white;
+        height: $header-height - 10px;
+        line-height: $header-height - 10px;
+        text-align: center;
+        margin: 0 auto;
+    }
+}
+
+.header {
+    @include headerbar (100px);
+}
+
+.subheader {
+    @include headerbar (100px);
 }
