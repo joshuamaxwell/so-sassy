@@ -1,20 +1,73 @@
 @import "compass";
 
 $header-height: 50px;
+$font-color-main: rgb(55, 202, 120);
+$font-color-sub: #0d492a;
 
 body {
-  background: #ddd;
+  background: rgb(126, 86, 151);
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: #333;
+  margin: 0;
+  padding: 0;
 }
 
-.card {
-    margin: 50px auto;
-    width: 800px;
+.container {
+  width: 960px;
+  margin: 0px auto;
+}
+
+
+@mixin headerbar ($header-height) {
+    color: $font-color-main;
+    text-shadow: -1px 1px #333, -2px 2px #333;
+    background: rgb(105, 47, 113);
     position: relative;
-    outline: 2px solid lime;
-    @include transition (all 2s ease);
+    z-index: 10;
+    box-shadow: 0 5px 20px 0px rgb(67, 67, 67);
+    height: $header-height;
+
+    .container {
+        h1.title {
+            font-size: 50px;
+            line-height: $header-height;
+            text-align: center;
+            margin: 0 auto;
+        }
     }
+} // end of headerbar mixin
+
+@mixin subheader ($header-height) {
+    color: $font-color-sub;
+    text-shadow: -1px 1px #333, -2px 2px #333;
+    letter-spacing: 2px;
+    position: relative;
+    z-index: 5;
+
+    .container {
+    
+      h2.subtitle {
+          @include single-box-shadow (rgb(67, 67, 67), 0px, 5px, 10px, 0px);
+          @include border-bottom-radius (20px);
+          background: rgb(86, 151, 115);
+          font-size: 30px;
+          height: $header-height - 10px;
+          line-height: $header-height - 10px;
+          text-align: center;
+          margin: 0 auto;
+      }
+    } //end container class 
+} // end subheader mixin definition
+
+
+.header {
+    @include headerbar (100px);
+}
+
+.subheader {
+    @include subheader (100px);
+}
+
 
 @mixin geometric-pattern-row ($triangle-base, $num-wide, $color) {
 
@@ -25,7 +78,11 @@ body {
   $d-color: adjust-lightness($color, 20%);
 
   width: $row-width;
-  margin: 0px auto;
+  margin: 30px auto;
+  @include box-shadow(-2px 2px 0px 0px rgb(67, 67, 67),
+                      -4px 4px 0px 0px rgb(67, 67, 67),
+                      -6px 6px 0px 0px rgb(67, 67, 67),
+                      -8px 8px 0px 0px rgb(67, 67, 67));
 
   .geometric-pattern-row {
       overflow: hidden;
@@ -74,9 +131,9 @@ body {
   } // end of geometric-pattern-row
 }//end of mixin definition 
 
-.geometric-container-b{
-  margin: 0px auto;
-  border-radius: 10px;
+.geometric-container-a{
+  overflow: hidden;
+  @include border-radius(20px);
 
   $r: 72;
   $g: 100;
@@ -91,10 +148,9 @@ body {
   }
 }
 
-.geometric-container-a{
-  margin: 00px auto;
-  border-radius: 10px;
-
+.geometric-container-b{
+  overflow: hidden;
+  @include border-radius(20px);
 
   $r: 20;
   $g: 20;
@@ -109,33 +165,22 @@ body {
   }
 }
 
-@mixin headerbar ($header-height) {
-    box-shadow: 0 5px 50px 0px black;
-    height: $header-height;
-    .container {
-        span.title {
-            font-size: 50px;
-            line-height: $header-height;
-            text-align: center;
-            margin: 0 auto;
-        }
-    }
-}
-@mixin subheader () {
-    span.subtitle {
-        font-size: 20px;
-        background-color: white;
-        height: $header-height - 10px;
-        line-height: $header-height - 10px;
-        text-align: center;
-        margin: 0 auto;
-    }
+.geometric-container-c{
+  overflow: hidden;
+  @include border-radius(20px);
+
+  $r: 90;
+  $g: 20;
+  $b: 50;
+
+  @include geometric-pattern-row (100px, 8, rgb($r, $g, $b));
+  &:hover {
+    @include geometric-pattern-row (100px, 8, rgb($r+50, $g+20, $b+10));
+  }
+  &:active {
+    @include geometric-pattern-row (100px, 8, rgb($r+10, $g+50, $b+90));
+  }
 }
 
-.header {
-    @include headerbar (100px);
-}
 
-.subheader {
-    @include headerbar (100px);
-}
+
